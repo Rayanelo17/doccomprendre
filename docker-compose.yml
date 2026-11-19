@@ -1,30 +1,8 @@
 version: '3.8'
 
 services:
-  # Chroma - base vectorielle (sans GPU, fichier local)
-  chroma:
-    image: chromadb/chroma:latest
-    container_name: doccomprendre-chroma
-    restart: unless-stopped
-    ports:
-      - "8000:8000"
-    volumes:
-      - chroma_data:/chroma/chroma
-    environment:
-      - IS_PERSISTENT=true
-      - ANONYMIZED_TELEMETRY=false
-      - CHROMA_SERVER_AUTH_CREDENTIALS=changepassword
-      - CHROMA_SERVER_AUTH_CREDENTIALS_PROVIDER=simple
 
-  # Tesseract OCR
-  tesseract:
-    image: rpr255/tesseract-ocr:4.1.1
-    container_name: doccomprendre-tesseract
-    restart: unless-stopped
-    volumes:
-      - ./data/ocr:/app/data
-
-  # Ollama (service pour documentation, mais l'utilisateur l'exécute localement)
+  # ─── Ollama (LLM local) ───
   ollama:
     image: ollama/ollama:latest
     container_name: doccomprendre-ollama
@@ -34,8 +12,58 @@ services:
     volumes:
       - ollama_data:/root/.ollama
     environment:
-      - CUDA_VISIBLE_DEVICES=
+      - CUDA_VISIBLE_DEVICES=  # pas de GPU
+
+  # ─── Chroma (base vectorielle) ───
+  chroma:
+    image: chromadb/chroma:latest
+    container_name: doccomprendre-chroma
+    restart: unless-stopped
+    ports:
+      - "8001:8000"
+    volumes:
+      - chroma_data:/chroma/chroma
+    environment:
+      - IS_PERSISTENT=true
+      - ANONYMIZED_TELEMETRY=false
+
+  # ─── API FastAPI ───
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: doccomprendre-api
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./data:/app/data
+      - ./prompts:/app/prompts
+      - ./chroma_data:/app/chroma_data
+    environment:
+      - OLLAMA_BASE_URL=http://ollama:11434
+      - CHROMA_HOST=chroma
+      - CHROMA_PORT=8000
+    depends_on:
+      - ollama
+      - chroma
+    command: python -m src.api.main
+
+  # ─── Interface Streamlit ───
+  ui:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: doccomprendre-ui
+    restart: unless-stopped
+    ports:
+      - "8501:8501"
+    environment:
+      - API_URL=http://api:8080
+    depends_on:
+      - api
+    command: streamlit run src/ui/main.py --server.port 8501 --server.address 0.0.0.0
 
 volumes:
-  chroma_data:
   ollama_data:
+  chroma_data:
