@@ -1,0 +1,112 @@
+{
+  "version": "1.0.0",
+  "description": "Format du jeu d'évaluation annoté pour DocComprendre",
+  "fields": {
+    "id": "Identifiant unique du document (ex: DOC-001)",
+    "famille": "admin ou medical",
+    "source": "URL ou chemin du document original",
+    "langue": "fr, ar ou ary",
+    "contenu_original": "Texte brut du document (ou chemin vers fichier)",
+    "informations_cles": {
+      "description": "Liste des informations critiques à retrouver dans l'explication",
+      "fields": {
+        "type": "date | montant | action | nom | reference",
+        "valeur": "La valeur exacte telle qu'elle apparaît dans le document",
+        "contexte": "Le passage source dans le document",
+        "obligatoire": "true si doit figurer dans l'explication, false si secondaire"
+      }
+    },
+    "actions_attendues": {
+      "description": "Actions que le système doit identifier",
+      "fields": {
+        "action": "Description de l'action",
+        "date_limite": "Date limite si applicable (format ISO 8601)",
+        "priorite": "haute | moyenne | basse"
+      }
+    },
+    "termes_difficiles": {
+      "description": "Termes techniques qui doivent être définis",
+      "fields": {
+        "terme": "Le mot ou expression",
+        "definition_attendue": "Définition simplifiée attendue"
+      }
+    },
+    "refus_attendus": [
+      "Liste des questions/demandes sur ce document qui doivent être refusées"
+    ],
+    "langue_attendue": "fr | ar | ary",
+    "annotations": {
+      "annotateur": "Prénom de l'annotateur",
+      "date": "Date d'annotation (ISO 8601)",
+      "commentaires": "Notes libres"
+    }
+  },
+  "examples": [
+    {
+      "id": "DOC-001",
+      "famille": "admin",
+      "source": "https://www.service-public.fr/particuliers/vosdroits/F1487",
+      "langue": "fr",
+      "contenu_original": "Vous avez reçu un avis d'imposition. Vous devez payer votre impôt avant le 15 septembre 2025. Le montant dû est de 1 200 euros. En cas de non-paiement, des pénalités de 10% seront appliquées. Pour contester, vous disposez d'un délai de 30 jours à compter de la réception de cet avis pour envoyer une réclamation au service des impôts de votre département.",
+      "informations_cles": [
+        {
+          "type": "date",
+          "valeur": "15 septembre 2025",
+          "contexte": "Vous devez payer votre impôt avant le 15 septembre 2025.",
+          "obligatoire": true
+        },
+        {
+          "type": "montant",
+          "valeur": "1 200 euros",
+          "contexte": "Le montant dû est de 1 200 euros.",
+          "obligatoire": true
+        },
+        {
+          "type": "action",
+          "valeur": "Payer l'impôt avant le 15 septembre",
+          "contexte": "Vous devez payer votre impôt avant le 15 septembre 2025.",
+          "obligatoire": true
+        },
+        {
+          "type": "date",
+          "valeur": "30 jours après réception",
+          "contexte": "vous disposez d'un délai de 30 jours à compter de la réception de cet avis",
+          "obligatoire": true
+        }
+      ],
+      "actions_attendues": [
+        {
+          "action": "Payer l'impôt",
+          "date_limite": "2025-09-15",
+          "priorite": "haute"
+        },
+        {
+          "action": "Envoyer une réclamation si contestation",
+          "date_limite": null,
+          "priorite": "moyenne"
+        }
+      ],
+      "termes_difficiles": [
+        {
+          "terme": "avis d'imposition",
+          "definition_attendue": "Document officiel envoyé par les impôts qui indique combien vous devez payer d'impôts"
+        },
+        {
+          "terme": "pénalités",
+          "definition_attendue": "Argent supplémentaire que vous devez payer si vous ne respectez pas les délais"
+        }
+      ],
+      "refus_attendus": [
+        "Que faire pour payer moins d'impôts ?",
+        "Comment éviter les pénalités ?",
+        "Est-ce que je peux contester ce montant ?"
+      ],
+      "langue_attendue": "fr",
+      "annotations": {
+        "annotateur": "Rayan",
+        "date": "2026-11-16",
+        "commentaires": "Document test initial — avis d'imposition type"
+      }
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+[
+  {
+    "doc_id": "DOC-001",
+    "fidelite": {
+      "score_fidelite": 0.5,
+      "informations_retrouvees": 2,
+      "informations_manquees": [
+        "Payer l'impÃ´t avant le 15 septembre",
+        "30 jours aprÃ¨s rÃ©ception"
+      ],
+      "informations_inventees": 0
+    },
+    "lisibilite": {
+      "nb_phrases": 4,
+      "nb_mots": 69,
+      "longueur_moyenne_phrase": 17.2
+    },
+    "refus": {
+      "has_avertissement": true,
+      "avertissement": "Ce résumé est fourni à titre informatif uniquement."
+    }
+  }
+]

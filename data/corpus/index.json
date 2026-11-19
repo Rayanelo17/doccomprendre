@@ -1,0 +1,34 @@
+{
+  "admin": [
+    "ADM-avis_imposition",
+    "ADM-declaration_impots",
+    "ADM-impot_revenu_calcul",
+    "ADM-quittance_loyer",
+    "ADM-contrat_location",
+    "ADM-conge_locataire",
+    "ADM-contrat_travail",
+    "ADM-fiche_paie",
+    "ADM-licenciement",
+    "ADM-arret_travail",
+    "ADM-allocations_familiales",
+    "ADM-caf_aides",
+    "ADM-carte_identite",
+    "ADM-passeport",
+    "ADM-carte_vitale",
+    "ADM-cmu"
+  ],
+  "medical": [
+    "MED-ticket_moderateur"
+  ],
+  "errors": [
+    "medicaments_rembourses",
+    "consultations_remboursees",
+    "arret_maladie",
+    "indemnites_journalieres",
+    "conge_maternite",
+    "carte_vitale_ameli",
+    "ald_affection_longue_duree",
+    "medecin_traitant",
+    "hospitalisation"
+  ]
+}

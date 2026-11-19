@@ -1,0 +1,21 @@
+# ORDONNANCE MÉDICALE
+Docteur Martin L.
+Cabinet Médical de la Paix
+12 rue de la République, 75001 Paris
+RPPS : 10002345678
+
+Patient : M. Jean Dupont
+Âge : 45 ans
+Date : 18/11/2026
+
+1. Amoxicilline 1g
+   1 comprimé matin et soir pendant 7 jours.
+
+2. Doliprane 1000mg
+   1 comprimé toutes les 6 heures en cas de douleur.
+
+À prendre avec un grand verre d'eau pendant les repas.
+Consulter un médecin si les symptômes persistent après 5 jours.
+
+Signature :
+Dr. Martin

@@ -1,0 +1,41 @@
+version: '3.8'
+
+services:
+  # Chroma - base vectorielle (sans GPU, fichier local)
+  chroma:
+    image: chromadb/chroma:latest
+    container_name: doccomprendre-chroma
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    volumes:
+      - chroma_data:/chroma/chroma
+    environment:
+      - IS_PERSISTENT=true
+      - ANONYMIZED_TELEMETRY=false
+      - CHROMA_SERVER_AUTH_CREDENTIALS=changepassword
+      - CHROMA_SERVER_AUTH_CREDENTIALS_PROVIDER=simple
+
+  # Tesseract OCR
+  tesseract:
+    image: rpr255/tesseract-ocr:4.1.1
+    container_name: doccomprendre-tesseract
+    restart: unless-stopped
+    volumes:
+      - ./data/ocr:/app/data
+
+  # Ollama (service pour documentation, mais l'utilisateur l'exécute localement)
+  ollama:
+    image: ollama/ollama:latest
+    container_name: doccomprendre-ollama
+    restart: unless-stopped
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_data:/root/.ollama
+    environment:
+      - CUDA_VISIBLE_DEVICES=
+
+volumes:
+  chroma_data:
+  ollama_data:

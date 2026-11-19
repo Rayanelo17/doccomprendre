@@ -1,0 +1,31 @@
+# Environnement virtuel Python
+venv/
+.venv/
+env/
+
+# Fichiers Python compilés
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Données locales (trop lourdes pour Git)
+chroma_data/
+data/ocr/
+
+# Variables d'environnement
+.env
+
+# Fichiers système Windows
+Thumbs.db
+desktop.ini
+
+# IDE
+.vscode/
+.idea/
+
+# Pytest
+.pytest_cache/
+*.egg-info/
+
+# MLflow
+mlruns/
